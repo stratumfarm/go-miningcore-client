@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -44,7 +45,7 @@ type Client struct {
 func New(url string, opts ...ClientOpts) *Client {
 	c := &Client{
 		timeout: time.Second * 20,
-		url:     url,
+		url:     strings.TrimSuffix(url, "/"),
 	}
 	for _, opt := range opts {
 		opt(c)
