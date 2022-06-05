@@ -26,21 +26,30 @@ func WithoutTLSVerfiy() ClientOpts {
 	}
 }
 
+// WithTimouts sets the default request timeout
+func WithTimeout(t time.Duration) ClientOpts {
+	return func(c *Client) {
+		c.timeout = t
+	}
+}
+
 // Client represents a client for the miningcore API.
 type Client struct {
-	url  string
-	http *http.Client
+	timeout time.Duration
+	url     string
+	http    *http.Client
 }
 
 // New create a new client for the miningcore API.
 func New(url string, opts ...ClientOpts) *Client {
 	c := &Client{
-		url:  url,
-		http: &http.Client{Timeout: 20 * time.Second},
+		timeout: time.Second * 20,
+		url:     url,
 	}
 	for _, opt := range opts {
 		opt(c)
 	}
+	c.http = &http.Client{Timeout: c.timeout}
 	return c
 }
 
