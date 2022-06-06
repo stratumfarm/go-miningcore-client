@@ -26,13 +26,13 @@ func main() {
         miningcore.WithoutTLSVerfiy(),
     )
 
-	pools, statusCode, err := c.GetPools(context.Background())
-	if err != nil {
-		fmt.Println(statusCode, err)
-	}
+    pools, statusCode, err := c.GetPools(context.Background())
+    if err != nil {
+        fmt.Println(statusCode, err)
+    }
 
-	for _, v := range pools {
-		fmt.Println(v)
-	}
+    for _, v := range pools {
+        fmt.Println(v)
+    }
 }
 ```
