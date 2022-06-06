@@ -126,7 +126,7 @@ type Block struct {
 }
 
 type BlocksRes struct {
-	Meta
+	*Meta
 	Result []*Block `json:"result"`
 }
 
