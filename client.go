@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
 	"time"
 )
@@ -27,7 +28,7 @@ func WithoutTLSVerfiy() ClientOpts {
 	}
 }
 
-// WithTimouts sets the default request timeout
+// WithTimout sets the default request timeout
 func WithTimeout(t time.Duration) ClientOpts {
 	return func(c *Client) {
 		c.timeout = t
@@ -55,12 +56,13 @@ func New(url string, opts ...ClientOpts) *Client {
 }
 
 // doRequest performs the actual request to the miningcore API.
-func (c *Client) doRequest(ctx context.Context, endpoint, method string, expRes, reqData interface{}) (int, error) {
-	callURL := fmt.Sprintf("%s%s", c.url, endpoint)
+func (c *Client) doRequest(ctx context.Context, endpoint, method string, expRes, reqData any, params ...map[string]string) (int, error) {
+	callURL, err := buildRequestUrl(c.url, endpoint, params...)
+	if err != nil {
+		return 0, err
+	}
 
 	var dataReq []byte
-	var err error
-
 	if reqData != nil {
 		dataReq, err = json.Marshal(reqData)
 		if err != nil {
@@ -97,4 +99,21 @@ func (c *Client) doRequest(ctx context.Context, endpoint, method string, expRes,
 	default:
 		return resp.StatusCode, fmt.Errorf("%s", body)
 	}
+}
+
+func buildRequestUrl(base, endpoint string, params ...map[string]string) (string, error) {
+	u, err := url.Parse(base)
+	if err != nil {
+		return "", err
+	}
+	u.Path = endpoint
+	if len(params) == 0 {
+		return u.String(), nil
+	}
+	p := url.Values{}
+	for k, v := range params[0] {
+		p.Set(k, v)
+	}
+	u.RawQuery = p.Encode()
+	return u.String(), nil
 }

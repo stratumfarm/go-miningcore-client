@@ -1,5 +1,13 @@
 package miningcore
 
+type Meta struct {
+	PageCount           int64    `json:"pageCount"`
+	Success             bool     `json:"success"`
+	ResponseMessageType int64    `json:"responseMessageType"`
+	ResponseMessageId   string   `json:"responseMessageId"`
+	ResponseMessageArgs []string `json:"responseMessageArgs"`
+}
+
 type PoolInfo struct {
 	ID                      string                          `json:"id"`
 	Coin                    *ApiCoinConfig                  `json:"coin"`
@@ -117,6 +125,11 @@ type Block struct {
 	Created                     string  `json:"created"`
 }
 
+type BlocksRes struct {
+	Meta
+	Result []*Block `json:"result"`
+}
+
 type Payment struct {
 	Coin                        string  `json:"coin,omitempty"`
 	Address                     string  `json:"address,omitempty"`
@@ -160,4 +173,30 @@ type BalanceChange struct {
 	Amount  float64 `json:"amount"`
 	Usage   string  `json:"usage"`
 	Created string  `json:"created"`
+}
+
+type PoolPerformance struct {
+	PoolHashrate         float64 `json:"poolHashrate"`
+	ConnectedMiners      int32   `json:"connectedMiners"`
+	ValidSharesPerSecond int32   `json:"validSharesPerSecond"`
+	NetworkHashrate      float64 `json:"networkHashrate"`
+	NetworkDifficulty    float64 `json:"networkDifficulty"`
+	Created              string  `json:"created"`
+}
+
+type MinerSettings struct {
+	PaymentThreshold float64 `json:"paymentThreshold"`
+}
+
+type MinerSettingsUpdateReq struct {
+	IPAddress string         `json:"ipAddress"`
+	Settings  *MinerSettings `json:"settings"`
+}
+
+type MinerSettingsUpdateRes struct {
+	Success             bool           `json:"success"`
+	ResponseMessageType int64          `json:"responseMessageType"`
+	ResponseMessageId   string         `json:"responseMessageId"`
+	ResponseMessageArgs []string       `json:"responseMessageArgs"`
+	Result              *MinerSettings `json:"result"`
 }
