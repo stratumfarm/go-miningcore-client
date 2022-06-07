@@ -3,9 +3,9 @@ package miningcore
 type Meta struct {
 	PageCount           int64    `json:"pageCount"`
 	Success             bool     `json:"success"`
-	ResponseMessageType int64    `json:"responseMessageType"`
-	ResponseMessageId   string   `json:"responseMessageId"`
-	ResponseMessageArgs []string `json:"responseMessageArgs"`
+	ResponseMessageType int64    `json:"responseMessageType,omitempty"`
+	ResponseMessageId   string   `json:"responseMessageId,omitempty"`
+	ResponseMessageArgs []string `json:"responseMessageArgs,omitempty"`
 }
 
 type PoolInfo struct {
@@ -140,6 +140,11 @@ type Payment struct {
 	Created                     string  `json:"created,omitempty"`
 }
 
+type PaymentRes struct {
+	*Meta
+	Result []*Payment `json:"result"`
+}
+
 type MinerStats struct {
 	PendingShares      int64          `json:"pendingShares"`
 	PendingBalance     float64        `json:"pendingBalance"`
@@ -167,12 +172,22 @@ type DailyEarning struct {
 	Date   string  `json:"date"`
 }
 
+type DailyEarningRes struct {
+	*Meta
+	Result []*DailyEarning `json:"result"`
+}
+
 type BalanceChange struct {
 	PoolId  string  `json:"poolId"`
 	Address string  `json:"address"`
 	Amount  float64 `json:"amount"`
 	Usage   string  `json:"usage"`
 	Created string  `json:"created"`
+}
+
+type BalanceChangeRes struct {
+	*Meta
+	Result []*BalanceChange `json:"result"`
 }
 
 type PoolPerformance struct {
