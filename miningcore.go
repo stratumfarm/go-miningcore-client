@@ -48,7 +48,7 @@ func (c *Client) GetPoolBlocks(ctx context.Context, id string, params ...map[str
 // GetPoolPayments returns a list of payments made by a pool.
 // This endpoint implements pagination using the `page` and `perPage` parameters.
 func (c *Client) GetPoolPayments(ctx context.Context, id string, params ...map[string]string) (*PaymentRes, int, error) {
-	e := fmt.Sprintf("/api/pools/%s/payments", id)
+	e := fmt.Sprintf("/api/v2/pools/%s/payments", id)
 	var res PaymentRes
 	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil, params...)
 	if err != nil {
@@ -58,11 +58,10 @@ func (c *Client) GetPoolPayments(ctx context.Context, id string, params ...map[s
 }
 
 // GetMiners returns a list of all miners in a pool.
-// This endpoint implements pagination using the `page` and `perPage` parameters.
-func (c *Client) GetMiners(ctx context.Context, id string, params ...map[string]string) ([]*MinerPerformanceStats, int, error) {
+func (c *Client) GetMiners(ctx context.Context, id string) ([]*MinerPerformanceStats, int, error) {
 	e := fmt.Sprintf("/api/pools/%s/miners", id)
 	var res []*MinerPerformanceStats
-	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil, params...)
+	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil)
 	if err != nil {
 		return nil, s, err
 	}
@@ -83,7 +82,7 @@ func (c *Client) GetMiner(ctx context.Context, id, addr string) (*MinerStats, in
 // GetMinerPayments returns a list of payments of a miner.
 // This endpoint implements pagination using the `page` and `perPage` parameters.
 func (c *Client) GetMinerPayments(ctx context.Context, id, addr string, params ...map[string]string) (*PaymentRes, int, error) {
-	e := fmt.Sprintf("/api/pools/%s/miners/%s/payments", id, addr)
+	e := fmt.Sprintf("/api/v2/pools/%s/miners/%s/payments", id, addr)
 	var res PaymentRes
 	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil, params...)
 	if err != nil {
@@ -95,7 +94,7 @@ func (c *Client) GetMinerPayments(ctx context.Context, id, addr string, params .
 // GetMinerDailyEarnings returns a list of daily earnings of a miner.
 // This endpoint implements pagination using the `page` and `perPage` parameters.
 func (c *Client) GetMinerDailyEarnings(ctx context.Context, id, addr string, params ...map[string]string) (*DailyEarningRes, int, error) {
-	e := fmt.Sprintf("/api/pools/%s/miners/%s/earnings/daily", id, addr)
+	e := fmt.Sprintf("/api/v2/pools/%s/miners/%s/earnings/daily", id, addr)
 	var res DailyEarningRes
 	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil, params...)
 	if err != nil {
@@ -107,7 +106,7 @@ func (c *Client) GetMinerDailyEarnings(ctx context.Context, id, addr string, par
 // GetMinerBalanceChanges returns a list of balance changes of a miner.
 // This endpoint implements pagination using the `page` and `perPage` parameters.
 func (c *Client) GetMinerBalanceChanges(ctx context.Context, id, addr string, params ...map[string]string) (*BalanceChangeRes, int, error) {
-	e := fmt.Sprintf("/api/pools/%s/miners/%s/balancechanges", id, addr)
+	e := fmt.Sprintf("/api/v2/pools/%s/miners/%s/balancechanges", id, addr)
 	var res BalanceChangeRes
 	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil, params...)
 	if err != nil {
