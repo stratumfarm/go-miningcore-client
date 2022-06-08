@@ -50,7 +50,7 @@ func (c *Client) GetPoolBlocks(ctx context.Context, id string, params ...map[str
 func (c *Client) GetPoolPayments(ctx context.Context, id string, params ...map[string]string) (*PaymentRes, int, error) {
 	e := fmt.Sprintf("/api/v2/pools/%s/payments", id)
 	var res PaymentRes
-	s, err := c.doRequest(ctx, e, http.MethodGet, &res, params)
+	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil, params...)
 	if err != nil {
 		return nil, s, err
 	}
@@ -62,7 +62,7 @@ func (c *Client) GetPoolPayments(ctx context.Context, id string, params ...map[s
 func (c *Client) GetMiners(ctx context.Context, id string, params ...map[string]string) ([]*MinerPerformanceStats, int, error) {
 	e := fmt.Sprintf("/api/pools/%s/miners", id)
 	var res []*MinerPerformanceStats
-	s, err := c.doRequest(ctx, e, http.MethodGet, &res, params)
+	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil, params...)
 	if err != nil {
 		return nil, s, err
 	}
@@ -78,7 +78,7 @@ func (c *Client) GetMiners(ctx context.Context, id string, params ...map[string]
 func (c *Client) GetMiner(ctx context.Context, id, addr string, params ...map[string]string) (*MinerStats, int, error) {
 	e := fmt.Sprintf("/api/pools/%s/miners/%s", id, addr)
 	var res MinerStats
-	s, err := c.doRequest(ctx, e, http.MethodGet, &res, params)
+	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil, params...)
 	if err != nil {
 		return nil, s, err
 	}
@@ -90,7 +90,7 @@ func (c *Client) GetMiner(ctx context.Context, id, addr string, params ...map[st
 func (c *Client) GetMinerPayments(ctx context.Context, id, addr string, params ...map[string]string) (*PaymentRes, int, error) {
 	e := fmt.Sprintf("/api/v2/pools/%s/miners/%s/payments", id, addr)
 	var res PaymentRes
-	s, err := c.doRequest(ctx, e, http.MethodGet, &res, params)
+	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil, params...)
 	if err != nil {
 		return nil, s, err
 	}
@@ -102,7 +102,7 @@ func (c *Client) GetMinerPayments(ctx context.Context, id, addr string, params .
 func (c *Client) GetMinerDailyEarnings(ctx context.Context, id, addr string, params ...map[string]string) (*DailyEarningRes, int, error) {
 	e := fmt.Sprintf("/api/v2/pools/%s/miners/%s/earnings/daily", id, addr)
 	var res DailyEarningRes
-	s, err := c.doRequest(ctx, e, http.MethodGet, &res, params)
+	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil, params...)
 	if err != nil {
 		return nil, s, err
 	}
@@ -152,7 +152,7 @@ func (c *Client) GetPerformance(ctx context.Context, id string, params ...map[st
 	var res struct {
 		Stats []*PoolPerformance `json:"stats"`
 	}
-	s, err := c.doRequest(ctx, e, http.MethodGet, &res, params)
+	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil, params...)
 	if err != nil {
 		return nil, s, err
 	}

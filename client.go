@@ -61,6 +61,7 @@ func (c *Client) doRequest(ctx context.Context, endpoint, method string, expRes,
 	if err != nil {
 		return 0, err
 	}
+	print(callURL)
 
 	var dataReq []byte
 	if reqData != nil {
@@ -112,6 +113,7 @@ func buildRequestUrl(base, endpoint string, params ...map[string]string) (string
 	}
 	p := url.Values{}
 	for k, v := range params[0] {
+		fmt.Println(k, v)
 		p.Set(k, v)
 	}
 	u.RawQuery = p.Encode()
