@@ -149,10 +149,12 @@ func (c *Client) PostMinerSettings(ctx context.Context, id, addr string, setting
 // 		"Day"
 func (c *Client) GetPerformance(ctx context.Context, id string, params ...map[string]string) ([]*PoolPerformance, int, error) {
 	e := fmt.Sprintf("/api/pools/%s/performance", id)
-	var res []*PoolPerformance
+	var res struct {
+		Stats []*PoolPerformance `json:"stats"`
+	}
 	s, err := c.doRequest(ctx, e, http.MethodGet, &res, params)
 	if err != nil {
 		return nil, s, err
 	}
-	return res, s, nil
+	return res.Stats, s, nil
 }
