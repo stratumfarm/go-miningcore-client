@@ -50,7 +50,7 @@ func (c *Client) GetPoolBlocks(ctx context.Context, id string, params ...map[str
 func (c *Client) GetPoolPayments(ctx context.Context, id string, params ...map[string]string) (*PaymentRes, int, error) {
 	e := fmt.Sprintf("/api/v2/pools/%s/payments", id)
 	var res PaymentRes
-	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil, params...)
+	s, err := c.doRequest(ctx, e, http.MethodGet, &res, params)
 	if err != nil {
 		return nil, s, err
 	}
@@ -58,10 +58,11 @@ func (c *Client) GetPoolPayments(ctx context.Context, id string, params ...map[s
 }
 
 // GetMiners returns a list of all miners in a pool.
-func (c *Client) GetMiners(ctx context.Context, id string) ([]*MinerPerformanceStats, int, error) {
+// This endpoint implements pagination using the `page` and `perPage` parameters.
+func (c *Client) GetMiners(ctx context.Context, id string, params ...map[string]string) ([]*MinerPerformanceStats, int, error) {
 	e := fmt.Sprintf("/api/pools/%s/miners", id)
 	var res []*MinerPerformanceStats
-	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil)
+	s, err := c.doRequest(ctx, e, http.MethodGet, &res, params)
 	if err != nil {
 		return nil, s, err
 	}
@@ -69,10 +70,15 @@ func (c *Client) GetMiners(ctx context.Context, id string) ([]*MinerPerformanceS
 }
 
 // GetMiner returns information about a specific miner in a pool.
-func (c *Client) GetMiner(ctx context.Context, id, addr string) (*MinerStats, int, error) {
+// This endpoints allows to specify the performance mode using the`perfMode` parameter.
+// Possible values are:
+// 		"Hour"
+// 		"Day"
+// 		"Month"
+func (c *Client) GetMiner(ctx context.Context, id, addr string, params ...map[string]string) (*MinerStats, int, error) {
 	e := fmt.Sprintf("/api/pools/%s/miners/%s", id, addr)
 	var res MinerStats
-	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil)
+	s, err := c.doRequest(ctx, e, http.MethodGet, &res, params)
 	if err != nil {
 		return nil, s, err
 	}
@@ -84,7 +90,7 @@ func (c *Client) GetMiner(ctx context.Context, id, addr string) (*MinerStats, in
 func (c *Client) GetMinerPayments(ctx context.Context, id, addr string, params ...map[string]string) (*PaymentRes, int, error) {
 	e := fmt.Sprintf("/api/v2/pools/%s/miners/%s/payments", id, addr)
 	var res PaymentRes
-	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil, params...)
+	s, err := c.doRequest(ctx, e, http.MethodGet, &res, params)
 	if err != nil {
 		return nil, s, err
 	}
@@ -96,7 +102,7 @@ func (c *Client) GetMinerPayments(ctx context.Context, id, addr string, params .
 func (c *Client) GetMinerDailyEarnings(ctx context.Context, id, addr string, params ...map[string]string) (*DailyEarningRes, int, error) {
 	e := fmt.Sprintf("/api/v2/pools/%s/miners/%s/earnings/daily", id, addr)
 	var res DailyEarningRes
-	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil, params...)
+	s, err := c.doRequest(ctx, e, http.MethodGet, &res, params)
 	if err != nil {
 		return nil, s, err
 	}
@@ -133,10 +139,18 @@ func (c *Client) PostMinerSettings(ctx context.Context, id, addr string, setting
 }
 
 // GetPerformance returns a list of performance stats of a pool.
-func (c *Client) GetPerformance(ctx context.Context, id string) ([]*PoolPerformance, int, error) {
+// This endpoint allows to specify the sample range using the `r` parameter and the sample interval using the `i` parameter.
+// Possible values for `r` are:
+// 		"Hour"
+// 		"Day"
+// 		"Month"
+// Possible values for `i` are:
+// 		"Hour"
+// 		"Day"
+func (c *Client) GetPerformance(ctx context.Context, id string, params ...map[string]string) ([]*PoolPerformance, int, error) {
 	e := fmt.Sprintf("/api/pools/%s/performance", id)
 	var res []*PoolPerformance
-	s, err := c.doRequest(ctx, e, http.MethodGet, &res, nil)
+	s, err := c.doRequest(ctx, e, http.MethodGet, &res, params)
 	if err != nil {
 		return nil, s, err
 	}
