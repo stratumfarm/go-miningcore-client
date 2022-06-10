@@ -162,8 +162,8 @@ type WorkerStats struct {
 }
 
 type WorkerPerformanceStats struct {
-	Hashrate         int64   `json:"hashrate"`
-	ReportedHashrate int64   `json:"reportedHashrate"`
+	Hashrate         float64 `json:"hashrate"`
+	ReportedHashrate float64 `json:"reportedHashrate"`
 	SharesPerSecond  float64 `json:"sharesPerSecond"`
 }
 
