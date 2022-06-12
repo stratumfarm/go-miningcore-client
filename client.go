@@ -74,6 +74,9 @@ func (c *Client) doRequest(ctx context.Context, endpoint, method string, expRes,
 	if err != nil {
 		return 0, err
 	}
+	if dataReq != nil {
+		req.Header.Add("Content-Type", "application/json")
+	}
 
 	resp, err := c.http.Do(req)
 	if err != nil {

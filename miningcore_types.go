@@ -207,11 +207,3 @@ type MinerSettingsUpdateReq struct {
 	IPAddress string         `json:"ipAddress"`
 	Settings  *MinerSettings `json:"settings"`
 }
-
-type MinerSettingsUpdateRes struct {
-	Success             bool           `json:"success"`
-	ResponseMessageType int64          `json:"responseMessageType"`
-	ResponseMessageId   string         `json:"responseMessageId"`
-	ResponseMessageArgs []string       `json:"responseMessageArgs"`
-	Result              *MinerSettings `json:"result"`
-}

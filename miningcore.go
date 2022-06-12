@@ -2,7 +2,6 @@ package miningcore
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"net/http"
 )
@@ -193,9 +192,18 @@ func (c *Client) UnmarshalMinerSettings(ctx context.Context, id, addr string, re
 }
 
 // PostMinerSettings updates the miner settings of a pool.
-func (c *Client) PostMinerSettings(ctx context.Context, id, addr string, settings *MinerSettingsUpdateReq) (*MinerSettingsUpdateRes, int, error) {
-	// TODO: implement
-	return nil, 0, errors.New("not implemented yet")
+func (c *Client) PostMinerSettings(ctx context.Context, id, addr string, settings *MinerSettingsUpdateReq) (*MinerSettings, int, error) {
+	var res MinerSettings
+	s, err := c.UnmarshalMinerSettings(ctx, id, addr, &res)
+	if err != nil {
+		return nil, s, err
+	}
+	return &res, s, nil
+}
+
+func (c *Client) UnmarshalPostMinerSettings(ctx context.Context, id, addr string, settings any, res any) (int, error) {
+	e := fmt.Sprintf("/api/pools/%s/miners/%s/settings", id, addr)
+	return c.doRequest(ctx, e, http.MethodPost, res, settings)
 }
 
 // GetPerformance returns a list of performance stats of a pool.
