@@ -157,6 +157,26 @@ func (c *Client) UnmarshalMinerBalanceChanges(ctx context.Context, id, addr stri
 	return c.doRequest(ctx, e, http.MethodGet, res, nil, params...)
 }
 
+// GetMinerPerformance returns a list of performance samples of a miner.
+// This endpoints allows to specify the sample range using the`sampleRange` parameter.
+// Possible values are:
+// 		"Hour"
+// 		"Day"
+// 		"Month"
+func (c *Client) GetMinerPerformance(ctx context.Context, id, addr string, params ...map[string]string) ([]*WorkerStats, int, error) {
+	var res []*WorkerStats
+	s, err := c.UnmarshalMinerPerformance(ctx, id, addr, &res, params...)
+	if err != nil {
+		return nil, s, err
+	}
+	return nil, 0, nil
+}
+
+func (c *Client) UnmarshalMinerPerformance(ctx context.Context, id, addr string, res any, params ...map[string]string) (int, error) {
+	e := fmt.Sprintf("/api/pools/%s/miners/%s/performance", id, addr)
+	return c.doRequest(ctx, e, http.MethodGet, res, nil)
+}
+
 // GetMinerSettings returns the current miner settings of a pool.
 func (c *Client) GetMinerSettings(ctx context.Context, id, addr string) (*MinerSettings, int, error) {
 	var res MinerSettings
