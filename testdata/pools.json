@@ -1,0 +1,80 @@
+{
+  "pools": [
+    {
+      "id": "eth",
+      "coin": {
+        "type": "ETH",
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "website": "",
+        "market": "",
+        "family": "ethereum",
+        "algorithm": "Ethhash",
+        "twitter": "",
+        "discord": "",
+        "telegram": "",
+        "canonicalName": "Ethereum"
+      },
+      "ports": {
+        "420": {
+          "listenAddress": "*",
+          "name": "NH / MRR",
+          "difficulty": 4,
+          "varDiff": {
+            "minDiff": 2,
+            "targetTime": 15,
+            "retargetTime": 90,
+            "variancePercent": 30
+          },
+          "tls": false,
+          "tlsAuto": false
+        },
+        "422": {
+          "listenAddress": "*",
+          "name": "4.3G",
+          "difficulty": 1,
+          "tls": true,
+          "tlsAuto": true
+        }
+      },
+      "paymentProcessing": {
+        "enabled": false,
+        "minimumPayment": 0.1,
+        "payoutScheme": "PPLNS",
+        "payoutSchemeConfig": [[[]]]
+      },
+      "clientConnectionTimeout": 600,
+      "jobRebroadcastTimeout": 10,
+      "blockRefreshInterval": 0,
+      "poolFeePercent": 1,
+      "address": "0x000000000000000000000000000000000000dEaD",
+      "addressInfoLink": "https://etherscan.io/address/0x000000000000000000000000000000000000dEaD",
+      "poolStats": {
+        "connectedMiners": 5,
+        "poolHashrate": 20000000000,
+        "sharesPerSecond": 10
+      },
+      "networkStats": {
+        "networkType": "Ethereum-Mainnet",
+        "networkHashrate": 938201090362901.9,
+        "networkDifficulty": 12015683922023432,
+        "nextNetworkTarget": "0x00000000000005ff38dea78eb458c94f85e1cf6ef42bf63c99b0cadc1147e0ec",
+        "nextNetworkBits": "",
+        "lastNetworkBlockTime": "2022-07-08T21:32:31.2873854Z",
+        "blockHeight": 15104404,
+        "connectedPeers": 20,
+        "rewardType": "POW"
+      },
+      "topMiners": [
+        {
+          "miner": "0x000000000000000000000000000000000000dEaD",
+          "hashrate": 20000000000,
+          "sharesPerSecond": 6.9
+        }
+      ],
+      "totalPaid": 10.1,
+      "totalBlocks": 5,
+      "lastPoolBlockTime": "2022-07-01T19:00:00.10Z"
+    }
+  ]
+}
