@@ -72,7 +72,7 @@ func (c *Client) UnmarshalPoolPayments(ctx context.Context, id string, res any, 
 	return c.doRequest(ctx, e, http.MethodGet, res, nil, params...)
 }
 
-// GetMiners returns a list of all miners in a pool.
+// GetMiners returns a list of all miners from a pool.
 // This endpoint implements pagination using the `page` and `perPage` parameters.
 func (c *Client) GetMiners(ctx context.Context, id string, params ...map[string]string) ([]*MinerPerformanceStats, int, error) {
 	var res []*MinerPerformanceStats
@@ -88,7 +88,7 @@ func (c *Client) UnmarshalMiners(ctx context.Context, id string, res any, params
 	return c.doRequest(ctx, e, http.MethodGet, res, nil, params...)
 }
 
-// GetMiner returns information about a specific miner in a pool.
+// GetMiner returns information about a specific miner from a pool.
 // This endpoints allows to specify the performance mode using the`perfMode` parameter.
 // Possible values are:
 // 		"Hour"

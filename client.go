@@ -58,7 +58,7 @@ type Client struct {
 	jsonDecoder func(data []byte, v interface{}) error
 }
 
-// New create a new client for the miningcore API.
+// New creates a new client for the miningcore API.
 func New(url string, opts ...ClientOpts) *Client {
 	c := &Client{
 		timeout:     time.Second * 20,
