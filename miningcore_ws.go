@@ -32,7 +32,16 @@ type ChainHeightMessage struct {
 	BlockMessage
 }
 
-type PaymentMessage struct{}
+type PaymentMessage struct {
+	PoolID          string   `json:"poolId"`
+	Symbol          string   `json:"symbol"`
+	TxFee           float64  `json:"txFee"`
+	TxIDs           []string `json:"txIds"`
+	TxExplorerLinks []string `json:"txExplorerLinks"`
+	RecipientsCount int      `json:"recpientsCount"` // typo in the API
+	Amount          float64  `json:"amount"`
+	Error           error    `json:"error"`
+}
 
 type BlockUnlockedMessage struct {
 	BlockMessage
