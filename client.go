@@ -35,18 +35,36 @@ func WithTimeout(t time.Duration) ClientOpts {
 	}
 }
 
+// WithJSONEncoder sets the JSON encoder for the client.
+func WithJSONEncoder(encoder func(v interface{}) ([]byte, error)) ClientOpts {
+	return func(c *Client) {
+		c.jsonEncoder = encoder
+	}
+}
+
+// WithJSONDecoder sets the JSON decoder for the client.
+func WithJSONDecoder(decoder func(data []byte, v interface{}) error) ClientOpts {
+	return func(c *Client) {
+		c.jsonDecoder = decoder
+	}
+}
+
 // Client represents a client for the miningcore API.
 type Client struct {
-	timeout time.Duration
-	url     string
-	http    *http.Client
+	timeout     time.Duration
+	url         string
+	http        *http.Client
+	jsonEncoder func(v interface{}) ([]byte, error)
+	jsonDecoder func(data []byte, v interface{}) error
 }
 
 // New create a new client for the miningcore API.
 func New(url string, opts ...ClientOpts) *Client {
 	c := &Client{
-		timeout: time.Second * 20,
-		url:     strings.TrimSuffix(url, "/"),
+		timeout:     time.Second * 20,
+		url:         strings.TrimSuffix(url, "/"),
+		jsonEncoder: json.Marshal,
+		jsonDecoder: json.Unmarshal,
 	}
 	for _, opt := range opts {
 		opt(c)
@@ -64,7 +82,7 @@ func (c *Client) doRequest(ctx context.Context, endpoint, method string, expRes,
 
 	var dataReq []byte
 	if reqData != nil {
-		dataReq, err = json.Marshal(reqData)
+		dataReq, err = c.jsonEncoder(reqData)
 		if err != nil {
 			return 0, err
 		}
@@ -92,7 +110,7 @@ func (c *Client) doRequest(ctx context.Context, endpoint, method string, expRes,
 	switch resp.StatusCode {
 	case 200:
 		if expRes != nil {
-			err = json.Unmarshal(body, expRes)
+			err = c.jsonDecoder(body, expRes)
 			if err != nil {
 				return 0, err
 			}
