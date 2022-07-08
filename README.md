@@ -1,5 +1,8 @@
 # go-miningcore-api
-
+[![testing](https://github.com/stratumfarm/go-miningcore-client/actions/workflows/testing.yml/badge.svg)](https://github.com/stratumfarm/go-miningcore-client/actions/workflows/testing.yml)
+[![lint](https://github.com/stratumfarm/go-miningcore-client/actions/workflows/lint.yml/badge.svg)](https://github.com/stratumfarm/go-miningcore-client/actions/workflows/lint.yml)
+[![GoDoc](https://godoc.org/github.com/golang/gddo?status.svg)](https://pkg.go.dev/github.com/stratumfarm/go-miningcore-client)
+[![Go Report Card](https://goreportcard.com/badge/github.com/stratumfarm/go-miningcore-client)](https://goreportcard.com/report/github.com/stratumfarm/go-miningcore-client)
 ## About
 This is a go wrapper around the miningcore api. It implements the miningcore api v2, which also returns meta object, on all available endpoints.
 
