@@ -65,6 +65,7 @@ func New(url string, opts ...ClientOpts) *Client {
 		url:         strings.TrimSuffix(url, "/"),
 		jsonEncoder: json.Marshal,
 		jsonDecoder: json.Unmarshal,
+		http:        &http.Client{},
 	}
 	for _, opt := range opts {
 		opt(c)
