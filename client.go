@@ -18,6 +18,7 @@ type ClientOpts func(*Client)
 
 // WithoutTLSVerify disables TLS verification.
 func WithoutTLSVerfiy() ClientOpts {
+	// #nosec G402
 	return func(c *Client) {
 		tr := &http.Transport{
 			TLSClientConfig: &tls.Config{
@@ -76,7 +77,7 @@ func New(url string, opts ...ClientOpts) *Client {
 
 // doRequest performs the actual request to the miningcore API.
 func (c *Client) doRequest(ctx context.Context, endpoint, method string, expRes, reqData any, params ...map[string]string) (int, error) {
-	callURL, err := buildRequestUrl(c.url, endpoint, params...)
+	callURL, err := buildRequestURL(c.url, endpoint, params...)
 	if err != nil {
 		return 0, err
 	}
@@ -123,7 +124,7 @@ func (c *Client) doRequest(ctx context.Context, endpoint, method string, expRes,
 	}
 }
 
-func buildRequestUrl(base, endpoint string, params ...map[string]string) (string, error) {
+func buildRequestURL(base, endpoint string, params ...map[string]string) (string, error) {
 	u, err := url.Parse(base)
 	if err != nil {
 		return "", err

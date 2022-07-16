@@ -4,15 +4,15 @@ type Meta struct {
 	PageCount           int64    `json:"pageCount"`
 	Success             bool     `json:"success"`
 	ResponseMessageType int64    `json:"responseMessageType,omitempty"`
-	ResponseMessageId   string   `json:"responseMessageId,omitempty"`
+	ResponseMessageID   string   `json:"responseMessageId,omitempty"`
 	ResponseMessageArgs []string `json:"responseMessageArgs,omitempty"`
 }
 
 type PoolInfo struct {
 	ID                      string                          `json:"id"`
-	Coin                    *ApiCoinConfig                  `json:"coin"`
+	Coin                    *APICoinConfig                  `json:"coin"`
 	Ports                   map[string]PoolEndpoint         `json:"ports"`
-	PaymentProcessing       *ApiPoolPaymentProcessingConfig `json:"paymentProcessing"`
+	PaymentProcessing       *APIPoolPaymentProcessingConfig `json:"paymentProcessing"`
 	ShareBasedBanning       *PoolShareBasedBanningConfig    `json:"shareBasedBanning"`
 	ClientConnectionTimeout int32                           `json:"clientConnectionTimeout"`
 	JobRebroadcastTimeout   int32                           `json:"jobRebroadcastTimeout"`
@@ -29,7 +29,7 @@ type PoolInfo struct {
 	APIEndpoint             string                          `json:"apiEndpoint"`
 }
 
-type ApiCoinConfig struct {
+type APICoinConfig struct {
 	Type          string `json:"type"`
 	Name          string `json:"name"`
 	Symbol        string `json:"symbol"`
@@ -69,7 +69,7 @@ type VarDiffConfig struct {
 	VariancePercent float64 `json:"variancePercent"`
 }
 
-type ApiPoolPaymentProcessingConfig struct {
+type APIPoolPaymentProcessingConfig struct {
 	Enabled        bool                   `json:"enabled"`
 	MinimumPayment float64                `json:"minimumPayment"`
 	PayoutScheme   string                 `json:"payoutScheme"`
@@ -178,7 +178,7 @@ type DailyEarningRes struct {
 }
 
 type BalanceChange struct {
-	PoolId  string  `json:"poolId"`
+	PoolID  string  `json:"poolId"`
 	Address string  `json:"address"`
 	Amount  float64 `json:"amount"`
 	Usage   string  `json:"usage"`
