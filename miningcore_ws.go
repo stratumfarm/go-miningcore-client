@@ -38,7 +38,7 @@ type PaymentMessage struct {
 	TxFee           float64  `json:"txFee"`
 	TxIDs           []string `json:"txIds"`
 	TxExplorerLinks []string `json:"txExplorerLinks"`
-	RecipientsCount int      `json:"recpientsCount"` // typo in the API
+	RecipientsCount int      `json:"recipientsCount"`
 	Amount          float64  `json:"amount"`
 	Error           error    `json:"error"`
 }
